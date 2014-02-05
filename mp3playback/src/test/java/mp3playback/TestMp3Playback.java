@@ -9,7 +9,6 @@ public class TestMp3Playback {
 	private static Scanner in;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		System.out.println("Hello World!");
 
