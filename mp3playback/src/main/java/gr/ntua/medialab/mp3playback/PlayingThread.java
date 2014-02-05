@@ -14,16 +14,12 @@ import javax.sound.sampled.SourceDataLine;
  * Hello world!
  *
  */
-public class TestMp3Playback 
+public class PlayingThread implements Runnable
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-        String mp3File = "/home/fedjo/Music/Mikro_feat_pes_mou _le3h.mp3";
-        
-        TestMp3Playback player = new TestMp3Playback();
-        player.testPlay(mp3File);
-    }
+	//Linux file
+	//private static String mp3File = "/home/fedjo/Music/Mikro_feat_pes_mou _le3h.mp3";
+	//Windows file
+	private static String mp3File = "C:\\Users\\marinellis\\Music\\God Is an Astronaut - Shining Through.mp3";
     
     public void testPlay(String filename)
     {
@@ -70,7 +66,7 @@ public class TestMp3Playback
         din.close();
       }
     }
-
+    
     private SourceDataLine getLine(AudioFormat audioFormat) throws LineUnavailableException
     {
       SourceDataLine res = null;
@@ -79,5 +75,11 @@ public class TestMp3Playback
       res.open(audioFormat);
       return res;
     }
+
+	public void run() {
+		// TODO Auto-generated method stub
+		this.testPlay(mp3File);
+		
+	}
 
 }
