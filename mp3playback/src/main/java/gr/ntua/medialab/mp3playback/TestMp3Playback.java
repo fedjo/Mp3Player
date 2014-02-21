@@ -2,7 +2,6 @@ package gr.ntua.medialab.mp3playback;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream.GetField;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
