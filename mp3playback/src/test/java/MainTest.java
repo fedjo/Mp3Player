@@ -1,7 +1,10 @@
+import gr.ntua.medialab.mp3playback.MediaContainer;
+import gr.ntua.medialab.mp3playback.impl.PlayingThread;
+import gr.ntua.medialab.mp3playback.impl.SongMetada;
 
-import gr.ntua.medialab.mp3playback.PlayingThread;
-import gr.ntua.medialab.mp3playback.SongMetada;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Collection;
 import de.umass.lastfm.Album;
 import de.umass.lastfm.Artist;
@@ -23,21 +26,48 @@ public class MainTest {
 		String mp3File = "/home/fedjo/Music/The Last Drive/The Last Drive - Heatwave/04. Devil May Care.mp3";
 
 		// Main Thread for the song playing
-		PlayingThread mainStream = new PlayingThread(mp3File);
-		Thread mainThread = new Thread(mainStream);
-		mainThread.start();
+		MediaContainer cont = new MediaContainer(mp3File);
 
-		SongMetada meta = new SongMetada(mp3File);
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					System.in));
+
+			String input;
+
+			while ((input = br.readLine()) != null) {
+				if (input.equals("play")) {
+					cont.play();
+				} else if (input.equals("pause")) {
+					cont.pause();
+				} else if (input.equals("stop")) {
+					cont.stop();
+				} else if (input.equals("for")) {
+					cont.forward();
+				} else if (input.equals("isPlay")) {
+					System.out.println(cont.isPlaying());
+				} else if (input.equals("isPause")) {
+					System.out.println(cont.isPaused());
+				} else if (input.equals("isStop")) {
+					System.out.println(cont.isPlaying());
+				}
+			}
+
+		} catch (IOException io) {
+			io.printStackTrace();
+		}
 
 		Session session = Authenticator.getMobileSession("fedjno",
 				"dr1rbl9Z83", lastfmKey, lastfmSecret);
 
-		Artist artistInfo = Artist.getInfo(meta.getArtist(), lastfmKey);
-		Track trackInfo = Track.getInfo(meta.getArtist(), meta.getTitle(),
+		SongMetada data = cont.getMetadata();
+		
+		Artist artistInfo = Artist.getInfo(cont.getMetadata().getArtist(),
 				lastfmKey);
+		Track trackInfo = Track.getInfo(cont.getMetadata().getArtist(), cont
+				.getMetadata().getTitle(), lastfmKey);
 
 		Object artistBIO = artistInfo.getWikiText();
-		String albumTitle = trackInfo.getAlbum();
+		String albumTitle = data.getAlbum();
 		String albumImageURL = trackInfo.getImageURL(ImageSize.LARGE);
 
 		System.out.println(artistBIO);
@@ -51,7 +81,6 @@ public class MainTest {
 		 * (System.currentTimeMillis() / 1000); ScrobbleResult res =
 		 * Track.scrobble(metadata[0], metadata[1], now, session);
 		 * System.out.println("ok: " + (res.isSuccessful() &&
-		 * !res.isIgnored()));
 		 */
 
 		Collection<Album> topAlbums = Artist.getTopAlbums("Wax Tailor",

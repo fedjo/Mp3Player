@@ -1,4 +1,4 @@
-import gr.ntua.medialab.mp3playback.SongMetada;
+import gr.ntua.medialab.mp3playback.impl.SongMetada;
 
 
 public class TestSongMetada {
@@ -11,7 +11,8 @@ public class TestSongMetada {
 	
 	public static void main(String[] args) {
 		
-		SongMetada meta = new SongMetada(songFile);
+		SongMetada meta = SongMetada.getInstance();
+		meta.setSongFile(songFile);
 		System.out.println(meta.getArtist() + "-" + meta.getTitle() + "-" + meta.getAlbum());
 		System.out.println(meta.getAlbumTitle() + "-" + meta.getAlbumImageURL());
 		System.out.println(meta.getArtistBIO());

@@ -1,8 +1,9 @@
 
 
+import java.io.ObjectInputStream.GetField;
 import java.util.Scanner;
 
-import gr.ntua.medialab.mp3playback.PlayingThread;
+import gr.ntua.medialab.mp3playback.impl.PlayingThread;
 
 public class TestMp3Playback {
 
@@ -15,7 +16,8 @@ public class TestMp3Playback {
 		
 		System.out.println("Hello World!");
 
-		PlayingThread player = new PlayingThread(mp3File);
+		PlayingThread player = PlayingThread.getInstance();
+		player.setMp3File(mp3File);
 		Thread playerThread = new Thread(player);
 		playerThread.start();
 

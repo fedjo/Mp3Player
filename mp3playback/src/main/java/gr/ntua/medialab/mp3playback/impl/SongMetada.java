@@ -1,4 +1,4 @@
-package gr.ntua.medialab.mp3playback;
+package gr.ntua.medialab.mp3playback.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,10 @@ import de.umass.lastfm.Artist;
 import de.umass.lastfm.ImageSize;
 import de.umass.lastfm.Track;
 
-public class SongMetada<V> {
+public class SongMetada {
 
+	public static final SongMetada INSTANCE = new SongMetada();
+	
 	private static String lastfmKey = "26dc868a306b42450c2df7fe5a13df2f";
     //private static String lastfmSecret = "0dbf0cfead3a4cd9b18510f880c6275d";
 	
@@ -24,15 +26,19 @@ public class SongMetada<V> {
 	private String albumImageURL;
 	private Object artistBIO;
 
-
-
-	
 	private String songFile;
 	
 
-	public SongMetada(String songFile) {
+	private SongMetada() {
+	}
+
+	public void setSongFile(String songFile) {
 		this.songFile = songFile;
-		getSongMetadata();
+		this.getSongMetadata();
+	}
+
+	public static SongMetada getInstance() {
+		return INSTANCE;
 	}
 
 	private void getSongMetadata() {
@@ -57,6 +63,7 @@ public class SongMetada<V> {
 		
 		// Retrieve album title
 		Track trackInfo = Track.getInfo(artist, title, lastfmKey);
+		System.out.println("dasdas");
         this.albumTitle = trackInfo.getAlbum();
         // Retrieve image URL
         this.albumImageURL = trackInfo.getImageURL(ImageSize.LARGE);

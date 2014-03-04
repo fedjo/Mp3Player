@@ -1,5 +1,5 @@
-import gr.ntua.medialab.mp3playback.PlayingThread;
-import gr.ntua.medialab.mp3playback.SongMetada;
+import gr.ntua.medialab.mp3playback.impl.PlayingThread;
+import gr.ntua.medialab.mp3playback.impl.SongMetada;
 
 import java.awt.EventQueue;
 
@@ -158,13 +158,13 @@ public class mainWindow {
 				//play
 				
 				String songFile = "/home/fedjo/Music/The Last Drive/The Last Drive - Heatwave/04. Devil May Care.mp3";
-				SongMetada meta = new SongMetada(songFile);
+				//SongMetada meta = new SongMetada(songFile);
 				//Artist.setName(meta.getArtist());
 				//Title.setName(meta.getTitle());
-				Album.setName(meta.getTitle());
+				//Album.setName(meta.getTitle());
 				frmMpPlayer.repaint();
-				PlayingThread thread = new PlayingThread(songFile);
-				thread.play();
+				//PlayingThread thread = new PlayingThread(songFile);
+				//thread.play();
 			}
 		});
 		Play.setHorizontalAlignment(SwingConstants.LEFT);
