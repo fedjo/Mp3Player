@@ -21,7 +21,7 @@ public class SongMetada {
 	
 	private String artist;
 	private String title;
-	private String album;
+	private String duration;
 	private String albumTitle;
 	private String albumImageURL;
 	private Object artistBIO;
@@ -53,7 +53,7 @@ public class SongMetada {
 
 			this.artist = (String) properties.get("author");
 			this.title  = (String) properties.get("title");
-			this.album  = String.valueOf((Long) properties.get("duration"));
+			this.duration  = String.valueOf((Long) properties.get("duration"));
 
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -63,7 +63,6 @@ public class SongMetada {
 		
 		// Retrieve album title
 		Track trackInfo = Track.getInfo(artist, title, lastfmKey);
-		System.out.println("dasdas");
         this.albumTitle = trackInfo.getAlbum();
         // Retrieve image URL
         this.albumImageURL = trackInfo.getImageURL(ImageSize.LARGE);
@@ -85,8 +84,8 @@ public class SongMetada {
 		return title;
 	}
 
-	public String getAlbum() {
-		return album;
+	public String getDuration() {
+		return duration;
 	}
 
 	public String getAlbumTitle() {

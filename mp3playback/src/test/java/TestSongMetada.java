@@ -13,7 +13,7 @@ public class TestSongMetada {
 		
 		SongMetada meta = SongMetada.getInstance();
 		meta.setSongFile(songFile);
-		System.out.println(meta.getArtist() + "-" + meta.getTitle() + "-" + meta.getAlbum());
+		System.out.println(meta.getArtist() + "-" + meta.getTitle() + "-" + meta.getAlbumTitle());
 		System.out.println(meta.getAlbumTitle() + "-" + meta.getAlbumImageURL());
 		System.out.println(meta.getArtistBIO());
 

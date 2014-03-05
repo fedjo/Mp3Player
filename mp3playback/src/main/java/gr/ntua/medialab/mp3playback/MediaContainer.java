@@ -13,10 +13,9 @@ public class MediaContainer {
 	private Thread mainThread;
 	private SongMetada metadata;
 
-	public MediaContainer(String file) {
+	public MediaContainer() {
 		thread = PlayingThread.getInstance();
 		metadata = SongMetada.getInstance();
-		//setMp3File(file);
 
 		mainThread = new Thread(thread);
 

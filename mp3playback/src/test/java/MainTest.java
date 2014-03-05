@@ -26,7 +26,8 @@ public class MainTest {
 		String mp3File = "/home/fedjo/Music/The Last Drive/The Last Drive - Heatwave/04. Devil May Care.mp3";
 
 		// Main Thread for the song playing
-		MediaContainer cont = new MediaContainer(mp3File);
+		MediaContainer cont = new MediaContainer();
+		cont.setMp3File(mp3File);
 
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -56,19 +57,18 @@ public class MainTest {
 			io.printStackTrace();
 		}
 
-		Session session = Authenticator.getMobileSession("fedjno",
-				"dr1rbl9Z83", lastfmKey, lastfmSecret);
+		/*Session session = Authenticator.getMobileSession("fedjno",
+				"dr1rbl9Z83", lastfmKey, lastfmSecret);*/
 
 		SongMetada data = cont.getMetadata();
 		
-		Artist artistInfo = Artist.getInfo(cont.getMetadata().getArtist(),
+		/*Artist artistInfo = Artist.getInfo(data.getArtist(),
 				lastfmKey);
-		Track trackInfo = Track.getInfo(cont.getMetadata().getArtist(), cont
-				.getMetadata().getTitle(), lastfmKey);
+		Track trackInfo = Track.getInfo(data.getArtist(), data.getTitle(), lastfmKey);*/
 
-		Object artistBIO = artistInfo.getWikiText();
-		String albumTitle = data.getAlbum();
-		String albumImageURL = trackInfo.getImageURL(ImageSize.LARGE);
+		Object artistBIO = data.getArtistBIO();
+		String albumTitle = data.getAlbumTitle();
+		String albumImageURL = data.getAlbumImageURL();
 
 		System.out.println(artistBIO);
 		System.out.println(albumTitle);
