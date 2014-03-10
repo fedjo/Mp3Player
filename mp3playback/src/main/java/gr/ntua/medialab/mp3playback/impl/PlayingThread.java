@@ -34,7 +34,7 @@ public class PlayingThread implements Runnable {
 
 	public void play() {
 		try {
-			do {
+			//do {
 				File file = new File(mp3File);
 				AudioInputStream in = AudioSystem.getAudioInputStream(file);
 				AudioInputStream din = null;
@@ -48,7 +48,7 @@ public class PlayingThread implements Runnable {
 				// Play now.
 				rawplay(decodedFormat, din);
 				in.close();
-			} while (play);
+			//} while (play);
 			play = false;
 		} catch (Exception e) {
 			// Handle exception.
@@ -94,6 +94,7 @@ public class PlayingThread implements Runnable {
 			line.stop();
 			line.close();
 			din.close();
+			//play = false;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

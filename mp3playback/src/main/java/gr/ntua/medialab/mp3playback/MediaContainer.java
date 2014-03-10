@@ -2,8 +2,6 @@ package gr.ntua.medialab.mp3playback;
 
 import java.lang.Thread.State;
 
-import javax.swing.undo.StateEdit;
-
 import gr.ntua.medialab.mp3playback.impl.PlayingThread;
 import gr.ntua.medialab.mp3playback.impl.SongMetada;
 

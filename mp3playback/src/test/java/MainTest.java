@@ -23,7 +23,9 @@ public class MainTest {
 
 	public static void main(String[] args) {
 		// Linux File
-		String mp3File = "/home/fedjo/Music/The Last Drive/The Last Drive - Heatwave/04. Devil May Care.mp3";
+		//String mp3File = "/home/fedjo/Music/The Last Drive/The Last Drive - Heatwave/04. Devil May Care.mp3";
+		// Windows file
+		String mp3File = "C:\\Users\\marinellis\\Music\\Collapse Under The Empire - Crawling.mp3";
 
 		// Main Thread for the song playing
 		MediaContainer cont = new MediaContainer();

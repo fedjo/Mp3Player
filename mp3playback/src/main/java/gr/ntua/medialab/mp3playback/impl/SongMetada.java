@@ -34,7 +34,8 @@ public class SongMetada {
 
 	public void setSongFile(String songFile) {
 		this.songFile = songFile;
-		this.getSongMetadata();
+		if (songFile != null)
+			this.getSongMetadata();
 	}
 
 	public static SongMetada getInstance() {
@@ -65,7 +66,7 @@ public class SongMetada {
 		Track trackInfo = Track.getInfo(artist, title, lastfmKey);
         this.albumTitle = trackInfo.getAlbum();
         // Retrieve image URL
-        this.albumImageURL = trackInfo.getImageURL(ImageSize.LARGE);
+        this.albumImageURL = trackInfo.getImageURL(ImageSize.MEDIUM);
         // Retrieve artist BIO
         Artist artistInfo = Artist.getInfo(artist, lastfmKey);
         this.artistBIO = artistInfo.getWikiText();
