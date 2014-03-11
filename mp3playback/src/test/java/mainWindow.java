@@ -1,3 +1,4 @@
+
 import gr.ntua.medialab.mp3playback.MediaContainer;
 import gr.ntua.medialab.mp3playback.impl.SongMetada;
 
@@ -30,9 +31,9 @@ import java.awt.Component;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import java.awt.Dimension;
 
@@ -49,6 +50,7 @@ public class mainWindow extends Observable {
 	private File[] filesOpen;
 	private Map<String, Component> comps = new HashMap<String, Component>();
 	private MediaContainer mc = new MediaContainer();
+	private Task task;
 	private String resetFile = "http://31.media.tumblr.com/avatar_2a8fe72ff5f9_128.png";
 
 	/**
@@ -148,9 +150,12 @@ public class mainWindow extends Observable {
 		frmMpPlayer.getContentPane().add(ProgressBar);
 		ProgressBar.setLayout(null);
 
-		JProgressBar progressBar = new JProgressBar();
+		JProgressBar progressBar = new JProgressBar(0, 100);
+		progressBar.setValue(0);
+		progressBar.setStringPainted(true);
 		progressBar.setBounds(0, 0, 1065, 14);
 		ProgressBar.add(progressBar);
+		comps.put("pbar", progressBar);
 
 		JPanel NowPlaying = new JPanel();
 		NowPlaying.setBounds(201, 66, 1065, 36);
@@ -238,7 +243,20 @@ public class mainWindow extends Observable {
 	}
 
 	public void setFilesOpen(File[] filesOpen) {
-		this.filesOpen = filesOpen;
+		if (this.filesOpen == null) {
+			this.filesOpen = filesOpen;
+		} else {
+			int len = this.filesOpen.length + filesOpen.length;
+			File[] mergedArray = new File[len];
+			
+			for (int i = 0; i < this.filesOpen.length; i++) {
+				mergedArray[i] = this.filesOpen[i];
+			}
+			for (int i = 0; i < filesOpen.length; i++) {
+				mergedArray[this.filesOpen.length] = filesOpen[i];
+			}
+			this.filesOpen = mergedArray;
+		}
 	}
 
 	public Map<String, Component> getComps() {
@@ -268,6 +286,8 @@ public class mainWindow extends Observable {
 				updatePhoto(mc.getMetadata().getAlbumImageURL());
 				updateBio(mc.getMetadata().getArtistBIO());
 				frmMpPlayer.repaint();
+				task = new Task();
+				task.start();
 				mc.play();
 			}
 		}
@@ -315,6 +335,7 @@ public class mainWindow extends Observable {
 		scrollPane.setBounds(12, 202, 188, 237);
 		frmMpPlayer.getContentPane().add(scrollPane);
 		comps.put("list", scrollPane);
+		frmMpPlayer.repaint();
 	}
 
 	public void resetSongList() {
@@ -324,7 +345,7 @@ public class mainWindow extends Observable {
 		}
 	}
 
-	class ImagePanel extends JPanel {
+	private class ImagePanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
 		private BufferedImage image;
@@ -353,5 +374,25 @@ public class mainWindow extends Observable {
 			g.drawImage(image, 0, 0, null);
 		}
 	}
+	
+	private class Task extends Thread {    
+	      public Task(){
+	      }
+
+	      public void run(){
+	         for(int i = 0; i<= 100; i+=10){
+	            final int progress = i;
+	            SwingUtilities.invokeLater(new Runnable() {
+	               public void run() {
+	            	   ((JProgressBar)comps.get("pbar"))
+	            	   			.setValue(progress);
+	               }
+	            });
+	            try {
+	               Thread.sleep(100);
+	            } catch (InterruptedException e) {}
+	         }
+	      }
+	   }   
 
 }
