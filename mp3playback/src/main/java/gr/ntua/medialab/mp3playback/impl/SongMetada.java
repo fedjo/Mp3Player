@@ -15,19 +15,18 @@ import de.umass.lastfm.Track;
 public class SongMetada {
 
 	public static final SongMetada INSTANCE = new SongMetada();
-	
+
 	private static String lastfmKey = "26dc868a306b42450c2df7fe5a13df2f";
-    //private static String lastfmSecret = "0dbf0cfead3a4cd9b18510f880c6275d";
-	
+	// private static String lastfmSecret = "0dbf0cfead3a4cd9b18510f880c6275d";
+
 	private String artist;
 	private String title;
-	private String duration;
+	private long duration;
 	private String albumTitle;
 	private String albumImageURL;
 	private Object artistBIO;
 
 	private String songFile;
-	
 
 	private SongMetada() {
 	}
@@ -35,46 +34,38 @@ public class SongMetada {
 	public void setSongFile(String songFile) {
 		this.songFile = songFile;
 		if (songFile != null)
-			this.getSongMetadata();
+			try {
+				this.getSongMetadata();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 
 	public static SongMetada getInstance() {
 		return INSTANCE;
 	}
 
-	private void getSongMetadata() {
+	private void getSongMetadata() 
+			throws UnsupportedAudioFileException, IOException {
 
 		File song = new File(songFile);
 		Map<String, Object> properties;
-		
-		try {
-			AudioFileFormat baseFileFormat = AudioSystem
-					.getAudioFileFormat(song);
-			properties = baseFileFormat.properties();
 
-			this.artist = (String) properties.get("author");
-			this.title  = (String) properties.get("title");
-			this.duration  = String.valueOf((Long) properties.get("duration"));
+		AudioFileFormat baseFileFormat = AudioSystem.getAudioFileFormat(song);
+		properties = baseFileFormat.properties();
 
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		this.artist = (String) properties.get("author");
+		this.title = (String) properties.get("title");
+		this.duration = (Long)properties.get("duration");
+
 		// Retrieve album title
 		Track trackInfo = Track.getInfo(artist, title, lastfmKey);
-        this.albumTitle = trackInfo.getAlbum();
-        // Retrieve image URL
-        this.albumImageURL = trackInfo.getImageURL(ImageSize.MEDIUM);
-        // Retrieve artist BIO
-        Artist artistInfo = Artist.getInfo(artist, lastfmKey);
-        this.artistBIO = artistInfo.getWikiText();
-
-
-        
-
-		
+		this.albumTitle = trackInfo.getAlbum();
+		// Retrieve image URL
+		this.albumImageURL = trackInfo.getImageURL(ImageSize.MEDIUM);
+		// Retrieve artist BIO
+		Artist artistInfo = Artist.getInfo(artist, lastfmKey);
+		this.artistBIO = artistInfo.getWikiText();
 	}
 
 	public String getArtist() {
@@ -85,7 +76,7 @@ public class SongMetada {
 		return title;
 	}
 
-	public String getDuration() {
+	public long getDuration() {
 		return duration;
 	}
 
@@ -100,5 +91,5 @@ public class SongMetada {
 	public Object getArtistBIO() {
 		return artistBIO;
 	}
-	
+
 }

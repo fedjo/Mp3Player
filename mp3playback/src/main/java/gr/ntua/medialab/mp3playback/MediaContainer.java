@@ -65,6 +65,17 @@ public class MediaContainer {
 		return thread.play;
 	}
 
+	public int time() {
+		thread.setCurrentTime();
+		long st = thread.getStartedTime();
+		long cur = thread.getCurrentTime();
+		
+		long totalTime = (metadata.getDuration()/1000);
+		double temp = (cur - st)/((double)totalTime);
+		double time = temp*100; 
+		return (int)time;
+	}
+	
 	public boolean isPaused() {
 		return thread.pause;
 	}
@@ -74,4 +85,6 @@ public class MediaContainer {
 		return metadata;
 	}
 
+	
+	
 }

@@ -380,7 +380,7 @@ public class mainWindow extends Observable {
 	      }
 
 	      public void run(){
-	         for(int i = 0; i<= 100; i+=10){
+	         /*for(int i = 0; i<= 100; i+=10){
 	            final int progress = i;
 	            SwingUtilities.invokeLater(new Runnable() {
 	               public void run() {
@@ -391,7 +391,12 @@ public class mainWindow extends Observable {
 	            try {
 	               Thread.sleep(100);
 	            } catch (InterruptedException e) {}
-	         }
+	         }*/
+	    	 while (mc.isPlaying()) {    		 
+	    		 ((JProgressBar)comps.get("pbar"))
+ 	   				.setValue((int)mc.time());
+	    		 frmMpPlayer.repaint();
+	    	 }
 	      }
 	   }   
 

@@ -14,7 +14,9 @@ public class PlayingThread implements Runnable {
 
 	private String mp3File;
 	private int ignored;
-
+	private long startedTime;
+	private long currentTime;
+	
 	public boolean play;
 	public boolean pause;
 	public boolean forward;
@@ -35,6 +37,7 @@ public class PlayingThread implements Runnable {
 	public void play() {
 		try {
 			//do {
+				this.startedTime = System.currentTimeMillis();
 				File file = new File(mp3File);
 				AudioInputStream in = AudioSystem.getAudioInputStream(file);
 				AudioInputStream din = null;
@@ -144,4 +147,17 @@ public class PlayingThread implements Runnable {
 		this.play();
 	}
 
+	public void setCurrentTime() {
+		this.currentTime = System.currentTimeMillis();
+	}
+
+	public long getStartedTime() {
+		return startedTime;
+	}
+
+	public long getCurrentTime() {
+		return currentTime;
+	}
+	
+	
 }
