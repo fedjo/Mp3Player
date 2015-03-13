@@ -1,5 +1,7 @@
+package gr.ntua.medialab.mp3playback.ui;
 
 import gr.ntua.medialab.mp3playback.MediaContainer;
+import gr.ntua.medialab.mp3playback.events.*;
 import gr.ntua.medialab.mp3playback.impl.SongMetada;
 
 import java.awt.EventQueue;
@@ -33,12 +35,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
 import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -219,6 +218,7 @@ public class mainWindow extends Observable {
 		PlayButtons.add(Stop);
 
 		JButton FastForward = new JButton(">>");
+		FastForward.addActionListener(new FastForward(this));
 		FastForward.setHorizontalAlignment(SwingConstants.LEFT);
 		FastForward.setBounds(203, 0, 48, 45);
 		PlayButtons.add(FastForward);
@@ -398,6 +398,10 @@ public class mainWindow extends Observable {
 	    		 frmMpPlayer.repaint();
 	    	 }
 	      }
-	   }   
+	   }
+
+	public void fastForward() {
+		mc.forward();
+	}   
 
 }
